@@ -2,25 +2,21 @@ import requests
 import datetime
 from collections import Counter
 
-access_token = "17da724517da724517da72458517b8abce117da17da72454d235c274f1a2be5f45ee711"
-#"3f6b4c043f6b4c043f6b4c04833f376b3e33f6b3f6b4c0463594eaa953af2dfd8083d6b"
-
+access_token = ""
 
 def get_own_vk_id(uid):
-    url = f"https://api.vk.com/method/users.get?v=5.71&access_token={access_token}" \
-        f"&user_ids={uid}"
+   
+    url = f"https://api.vk.com/method/users.get?v=5.71&access_token={access_token}&user_ids={uid}"
 
     r = requests.get(url).json()
     get_id = r['response'][0]['id']
-
     return get_id
 
 
 def get_own_friends(uid):
+   
     id = get_own_vk_id(uid)
-
-    url = f"https://api.vk.com/method/friends.get?v=5.71&access_token={access_token}" \
-        f"&user_id={id}&fields=bdate"
+    url = f"https://api.vk.com/method/friends.get?v=5.71&access_token={access_token}&user_id={id}&fields=bdate"
 
     friends = requests.get(url).json()['response']['items']
     return friends
@@ -30,7 +26,7 @@ def get_own_friends_by_data(uid):
     my_friends = get_own_friends(uid)
     my_friends_by_year = list()
 
-    current_year = datetime.datetime.now().year
+    current_year = datetime.datetime.now().year # you can change to any year you wont 
 
     for friend in my_friends:
         if 'bdate' in friend:
